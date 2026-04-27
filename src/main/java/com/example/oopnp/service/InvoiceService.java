@@ -90,7 +90,8 @@ public class InvoiceService {
             @CacheEvict(value = "projects", allEntries = true)
     })
     public Invoice updateInvoice(Long invoiceId, Double newFinalPrice, String newStatus) {
-        Invoice invoice = findById(invoiceId);
+        Invoice invoice = invoiceRepository.findById(invoiceId)
+                .orElseThrow(() -> new RuntimeException("Рахунок не знайдено"));
 
         // не можна редагувати оплачені чи відхилені рахунки
         if (invoice.getStatus() == InvoiceStatus.PAID || invoice.getStatus() == InvoiceStatus.CANCELLED) {

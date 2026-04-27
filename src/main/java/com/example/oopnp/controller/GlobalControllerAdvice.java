@@ -2,6 +2,7 @@ package com.example.oopnp.controller;
 
 import com.example.oopnp.entity.User;
 import com.example.oopnp.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
@@ -11,9 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.security.Principal;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GlobalControllerAdvice {
 
-    @Autowired
     private  UserService userService;
 
     @ModelAttribute

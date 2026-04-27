@@ -51,9 +51,6 @@ public class UserController {
             model.addAttribute("errors", errorsMap);
             model.addAttribute("customer", customer);
 
-            System.out.println(errorsMap);
-
-
             return "registration";
         }
 

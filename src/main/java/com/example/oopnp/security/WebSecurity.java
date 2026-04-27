@@ -17,7 +17,7 @@ public class WebSecurity {
     private final UserService userService;
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    public SecurityFilterChain configure(HttpSecurity http) {
 
         http
                 .csrf(csrf -> csrf.disable())
