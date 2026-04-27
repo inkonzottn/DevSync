@@ -28,14 +28,8 @@ public class WebSecurity {
                                         "/css/**", "/js/**").permitAll()
 
 
-//                                .requestMatchers("/", "/login", "/registration", "/static/**",
-//                                        "/css/**", "/js/**","/customers", "/developers",
-//                                        "/invoices", "/managers", "/project-assignments",
-//                                        "/projects")
-//                                .permitAll()
-
                                 // доступ за ролями
-                                .requestMatchers("/manager/**").hasAuthority("ROLE_manager")
+                                .requestMatchers("/manager/**").hasAuthority("ROLE_MANAGER")
                                 .requestMatchers("/developer/**").hasAuthority("ROLE_developer")
                                 .requestMatchers("/customer/**").hasAuthority("ROLE_customer")
                                 .requestMatchers("/admin/**").hasAuthority("ROLE_admin")

@@ -21,6 +21,10 @@ public class ProjectService {
     private final ManagerRepository managerRepository;
     private final DeveloperRepository developerRepository;
 
+    private static final String PROJECT_NOT_FOUND_MASSAGE = "Проєкт не знайдено";
+
+
+
     // save
     // замовник створює проєкт (замовлення) з назвою та описом
     @Transactional
@@ -53,7 +57,7 @@ public class ProjectService {
     })
     public Project updateProjectByAdmin(Long projectId, Project updatedProject, Long managerId) {
         Project existingProject = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Проєкт не знайдено"));
+                .orElseThrow(() -> new IllegalArgumentException(PROJECT_NOT_FOUND_MASSAGE));
 
         existingProject.setTitle(updatedProject.getTitle());
         existingProject.setDescription(updatedProject.getDescription());
@@ -84,7 +88,7 @@ public class ProjectService {
     })
     public Project updateProjectByManager(Long projectId, Project updatedProject, List<Long> developerIds) {
         Project existingProject = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Проєкт не знайдено"));
+                .orElseThrow(() -> new IllegalArgumentException(PROJECT_NOT_FOUND_MASSAGE));
 
         existingProject.setTitle(updatedProject.getTitle());
         existingProject.setDescription(updatedProject.getDescription());
@@ -118,7 +122,7 @@ public class ProjectService {
     public void deleteProject(Long projectId) {
 
         Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new IllegalArgumentException("Проєкт не знайдено"));
+                .orElseThrow(() -> new IllegalArgumentException(PROJECT_NOT_FOUND_MASSAGE));
 
         // чи є пов'язані завдання
         if (projectAssignmentRepository.existsByProjectId(projectId)) {

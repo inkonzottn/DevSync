@@ -22,6 +22,11 @@ public class InvoiceController {
     private final ProjectService projectService;
     private  final ProjectAssignmentService projectAssignmentService;
 
+    private static final String ADMIN_PATH = "admin";
+    private static final String MANAGER_PATH = "manager";
+    private static final String ERROR_MASSAGE = "errorMessage";
+    private static final String ROLE_ADMIN = "ROLE_admin";
+
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('admin', 'manager', 'customer')")
@@ -62,7 +67,7 @@ public class InvoiceController {
                                 RedirectAttributes redirectAttributes) {
 
         boolean isAdmin = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
+                .anyMatch(a -> a.getAuthority().equals(ROLE_ADMIN));
         String baseRedirect = isAdmin ? "redirect:/admin/projects" : "redirect:/manager/projects";
 
 
@@ -72,11 +77,11 @@ public class InvoiceController {
             return baseRedirect;
 
         } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
-            String rolePath = isAdmin ? "admin" : "manager";
+            redirectAttributes.addFlashAttribute(ERROR_MASSAGE, e.getMessage());
+            String rolePath = isAdmin ? ADMIN_PATH : MANAGER_PATH;
             return "redirect:/" + rolePath + "/projects/" + projectId;
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_MASSAGE, e.getMessage());
             return baseRedirect;
         }
     }
@@ -87,16 +92,16 @@ public class InvoiceController {
     @PreAuthorize("hasAnyRole('admin', 'manager')")
     public String getEditInvoiceForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes, Authentication authentication) {
         boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
+                .anyMatch(a -> a.getAuthority().equals(ROLE_ADMIN));
 
-        String rolePath = isAdmin ? "admin" : "manager";
+        String rolePath = isAdmin ? ADMIN_PATH : MANAGER_PATH;
 
         try {
             Invoice invoice = invoiceService.findById(id);
 
             // не можна редагувати оплачені чи відхилені рахунки
             if (invoice.getStatus() == InvoiceStatus.PAID | invoice.getStatus() == InvoiceStatus.CANCELLED) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Неможливо змінити рахунок, який вже оплачено чи відхилено!");
+                redirectAttributes.addFlashAttribute(ERROR_MASSAGE, "Неможливо змінити рахунок, який вже оплачено чи відхилено!");
                 return "redirect:/" + rolePath + "/invoices";
             }
 
@@ -105,7 +110,7 @@ public class InvoiceController {
             return "invoice-edit";
 
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_MASSAGE, e.getMessage());
             return "redirect:/" + rolePath + "/invoices";
         }
     }
@@ -119,9 +124,9 @@ public class InvoiceController {
                                 RedirectAttributes redirectAttributes, Authentication authentication) {
 
         boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_admin"));
+                .anyMatch(a -> a.getAuthority().equals(ROLE_ADMIN));
 
-        String rolePath = isAdmin ? "admin" : "manager";
+        String rolePath = isAdmin ? ADMIN_PATH : MANAGER_PATH;
 
         try {
             invoiceService.updateInvoice(id, finalPrice, status);
@@ -129,7 +134,7 @@ public class InvoiceController {
             return "redirect:/" + rolePath + "/invoices";
 
         } catch (IllegalStateException | IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute(ERROR_MASSAGE, e.getMessage());
             return "redirect:/invoices/edit/" + id;
         }
     }
