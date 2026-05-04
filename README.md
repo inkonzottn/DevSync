@@ -18,7 +18,7 @@
 ## ⚙️ Інструкція із запуску (Getting Started)
 
 1. **Клонуйте репозиторій:**
-   `git clone <URL_вашого_репозиторію>`
+   `git clone https://github.com/inkonzottn/DevSync.git`
 2. **Зберіть проєкт за допомогою Maven:**
    `mvn clean package`
 3. **Запустіть застосунок:**
