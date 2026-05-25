@@ -15,7 +15,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class GlobalControllerAdvice {
 
-    private  UserService userService;
+    private final UserService userService;
 
     @ModelAttribute
     public void addAttributes(Model model, Principal principal, Authentication auth) {

@@ -52,10 +52,10 @@
                 </div>
 
                 <form action="/invoices/create/${project.id}" method="post">
-                    <label class="form-label text-uppercase text-muted fw-bold small tracking-wide mb-3">Фінальна сума до сплати ($)</label>
+                    <label class="form-label text-uppercase text-muted fw-bold small tracking-wide mb-3">Фінальна сума до сплати (грн)</label>
 
                     <div class="input-group input-group-lg mb-4 shadow-sm">
-                        <span class="input-group-text bg-light text-success fw-bold border-success border-opacity-50"><i class="bi bi-currency-dollar"></i></span>
+                        <span class="input-group-text bg-light text-success fw-bold border-success border-opacity-50">грн</span>
                         <input type="number" step="0.01" name="finalPrice"
                                class="form-control text-success fw-bold border-success border-opacity-50"
                                style="font-size: 1.5rem;"

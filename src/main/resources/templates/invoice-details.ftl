@@ -32,8 +32,8 @@
         <div class="receipt-card p-5">
             <div class="receipt-header d-flex justify-content-between align-items-end">
                 <div>
-                    <h2 class="fw-bold mb-0">INVOICE #${invoice.id}</h2>
-                    <p class="text-muted mb-0">Дата: ${invoice.formattedCompletedAt!"Сьогодні"}</p>
+                    <h2 class="fw-bold mb-0">РАХУНОК #${invoice.id}</h2>
+                    <p class="text-muted mb-0">Дата: ${.now?string('dd.MM.yyyy')}</p>
                 </div>
                 <div class="text-end">
                     <h4 class="fw-bold text-primary mb-0">DevSync Agency</h4>
